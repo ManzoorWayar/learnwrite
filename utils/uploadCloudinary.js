@@ -1,0 +1,35 @@
+import path from "path";
+import { unlink } from "fs/promises";
+import cloudinary from "../config/cloudinary.js";
+
+const uploadToCloud = async (req, res, next) => {
+  const __dirname = path.resolve();
+
+  const { files } = req;
+  console.log(files);
+
+  req.body.images = [];
+
+  try {
+    await Promise.all(
+      Object.values(files).map(async (file) => {
+        for (const element of file) {
+          const img = await cloudinary.cloudinary.uploader.upload(
+            element.path,
+            {
+              upload_preset: "leaninbox",
+            }
+          );
+          req.body.images.push({ ...img, name: element.fieldname });
+
+          await unlink(`${__dirname}/public/uploads/${element?.filename}`);
+        }
+      })
+    );
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default uploadToCloud;
