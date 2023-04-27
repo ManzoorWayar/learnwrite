@@ -66,9 +66,7 @@ export default class remainStepTemplate {
       </div>
       <br/>
                                               <p style="font-family: 'Kalameh', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-bottom: 24px;">
-                                                  <span> Ip address: </span> ${
-																										this.ipAddress
-																									}
+                                                  <span> Ip address: </span>
 
                                                   <br/>
                                                   <span>Date: </span> ${new Date()}
@@ -123,18 +121,12 @@ export default class remainStepTemplate {
                                                  style="font-family: 'Kalameh', sans-serif; mso-line-height-rule: exactly; margin-bottom: 16px; cursor: default;">
                                                   <a id="facebook-url" href=""
                                                      style="font-family: 'Kalameh', sans-serif; mso-line-height-rule: exactly; color: #263238; text-decoration: none;"><img
-                                                          src="${
-																														this.socialUrls
-																															.facebook
-																													}" width="17" alt="facebook"
+                                                          src="" width="17" alt="facebook"
                                                           style="max-width: 100%; vertical-align: middle; line-height: 100%; border: 0; margin-right: 12px;"></a>
                                                   &bull;
                                                   <a id="instagram-url" href=""
                                                      style="font-family: 'Kalameh', sans-serif; mso-line-height-rule: exactly; color: #263238; text-decoration: none;"><img
-                                                          src="${
-																														this.socialUrls
-																															.instagram
-																													}" width="17" alt="instagram"
+                                                          src="" width="17" alt="instagram"
                                                           style="max-width: 100%; vertical-align: middle; line-height: 100%; border: 0; margin-right: 12px;"></a>
                                               </p>
                                               <p style="font-family: 'Kalameh', sans-serif; mso-line-height-rule: exactly; color: #263238;">
