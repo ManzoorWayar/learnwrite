@@ -10,6 +10,24 @@ const create = asyncHandler(async ({ body, file }, res) => {
   res.status(201).json();
 });
 
+const getAbout = asyncHandler(async (req, res) => {
+  const { user } = req;
+  console.log();
+  res.status(200).json({
+    "firstName": user?.firstName,
+    "lastName": user?.lastName,
+    "country": user?.country,
+    "userType": user?.userType,
+    "languages": user?.languages,
+    "age": user?.age,
+    "mentorshipFor": user?.mentorshipFor,
+    "provideMentorship": user?.provideMentorship,
+    "mentorshipLevel": user?.mentorshipLevel,
+    "mentorExperience": user?.mentorExperience,
+    "mentorSituation": user?.mentorSituation
+  });
+});
+
 const about = asyncHandler(async (req, res) => {
   const { user, body } = req;
   body.pages = 1;
@@ -140,6 +158,28 @@ const pricing = asyncHandler(async (req, res) => {
   res.status(200).json(updated);
 });
 
+const mentorStatus = asyncHandler(async (req, res) => {
+  const { user, body, params } = req
+
+  if (!mongoose.Types.ObjectId.isValid(params.id)) {
+    return next();
+  }
+
+  body.updaterId = user?.id
+
+  const mentor = await User.findByIdAndUpdate(params.id, {
+    status: body.status,
+    updaterId: user?.id
+  }, { new: true })
+
+  if (mentor) {
+    res.status(400)
+    throw new Error("no mentor was found")
+  }
+
+  res.status(200).json(mentor)
+})
+
 export default {
   about,
   education,
@@ -148,5 +188,7 @@ export default {
   create,
   pricing,
   profile,
+  mentorStatus,
   videoLink,
+  getAbout
 };

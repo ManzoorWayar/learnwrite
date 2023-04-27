@@ -322,6 +322,15 @@ const pricingSchema = checkSchema({
   },
 });
 
+const mentorStatusSchema = checkSchema({
+  status: {
+    isEmpty: {
+      negated: true,
+      errorMessage: "status is required",
+    },
+  }
+});
+
 const errorHandler = (req, res, next) => {
   // handling validation errors
   const validationErrs = validationResult(req);
@@ -343,4 +352,5 @@ export default {
   video: [videoLinkSchema, errorHandler],
   pricing: [pricingSchema, errorHandler],
   about: [aboutSchema, errorHandler],
+  mentorStatus: [mentorStatusSchema, errorHandler],
 };

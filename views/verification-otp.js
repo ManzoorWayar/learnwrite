@@ -1,8 +1,7 @@
 export default class OtpVerificationTemplate {
   supportEmail = "support@writeinbox.com"
-  constructor(pages, message, email) {
-    this.message = message
-    this.pages = pages
+  constructor(token) {
+    this.token = token
     this.email = email
   }
 
@@ -63,11 +62,11 @@ export default class OtpVerificationTemplate {
     
         <p style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'>Here’s a quote.  Here’s a quote.  “Here’s a quote in quotes”.</p>
     
-        <p id="accents" style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'>cédille cé garçon garçon à à</p>
+        <p id="accents" style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'>tokenis ${this.token}</p>
     
     
         <p style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'>Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi.</p>
-        <p style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'> ${this.message}</p>
+        <p style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero.</p>
         <blockquote style='color: #999; margin: 0; padding: 5px 30px; font: italic 16px/145% "Georgia", serif;' align="center"><p style='color: #999; vertical-align: top; margin: 0 0 1em; font: italic 16px/145% "Georgia", serif;'>“Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis.”</p></blockquote>
         <p style='color: #999; vertical-align: top; margin: 0 0 1em; font: 100%/158% "Arial", sans-serif;'>Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero.</p>
     

@@ -1,6 +1,6 @@
 import User from "../models/User.js"
 import sendMail from "../utils/sendMail.js"
-import OtpVerificationTemplate from "../views/verification-otp.js"
+import remainStepTemplate from "../views/remainingStep.js"
 import schedule from "node-schedule"
 
 const cornJobs = async () => {
@@ -11,10 +11,9 @@ const cornJobs = async () => {
 		if (users.length > 0) {
 			users.forEach((user) => {
 				const message = `You have not completed the sign up from please complete it from step <a target='_blank'>http://localhost:3000/user/complete-profile?step=${user.pages}</a>`
-				const emailContent = new OtpVerificationTemplate(
+				const emailContent = new remainStepTemplate(
 					user?.pages,
 					message,
-					user.email,
 				)
 
 				return sendMail({

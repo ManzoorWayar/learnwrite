@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import crypto from "crypto"
 import speakeasy from "speakeasy"
-import OtpVerificationTemplate from "../views/verification-otp.js"
+import EmailVerificationTemplate from "../views/verify-email.js"
 import sendMail from "../utils/sendMail.js"
 
 const UserSchema = new mongoose.Schema(
@@ -170,8 +170,8 @@ const UserSchema = new mongoose.Schema(
 		discount: {
 			type: Number,
 		},
-		totalPayment:{
-			type:Number,
+		totalPayment: {
+			type: Number,
 		},
 		status: {
 			type: String,
@@ -249,10 +249,8 @@ UserSchema.methods.sendEmailVerificationToken = function () {
 		step: process.env.OTP_STEP_EMAIL || 120,
 	})
 
-	const emailContent = new OtpVerificationTemplate(
-		token,
-		this.email,
-		process.env.FRONT_BASEURL
+	const emailContent = new EmailVerificationTemplate(
+		token
 	)
 
 	return sendMail({

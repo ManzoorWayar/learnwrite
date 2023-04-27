@@ -32,4 +32,14 @@ const authenticate = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export { authenticate }
+// Grant access to specific roles
+const authorize = (...roles) => {
+	return (req, res, next) => {
+		if (!roles.includes(req.user.userType)) {
+			throw new Error(`User role ${req.user.userType} is not authorized to access this route`)
+		}
+		next();
+	};
+};
+
+export { authenticate, authorize }
