@@ -12,8 +12,8 @@ router.post("/verify", authValidator.verifyEmail, authController.verifyEmail);
 
 router.post(
   "/resend-token",
-  authValidator.verifyEmail,
-  authController.verifyEmail
+  authValidator.resendToken,
+  authController.resendToken
 );
 
 router.route("/refresh").get(authController.refresh);
