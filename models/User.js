@@ -255,9 +255,7 @@ UserSchema.methods.sendEmailVerificationToken = function () {
 		step: process.env.OTP_STEP_EMAIL || 120,
 	})
 
-	const emailContent = new EmailVerificationTemplate(
-		token
-	)
+	const emailContent = new EmailVerificationTemplate(token)
 
 	return sendMail({
 		email: this.email,

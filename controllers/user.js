@@ -128,13 +128,26 @@ const getBackground = asyncHandler(async (req, res) => {
 	const { user } = req;
 
 	res.status(200).json({
-		"name": user?.university.name,
-		"degree": user?.university.degree,
-		"degreeType": user?.university.degreeType,
-		"specialization": user?.university.specialization,
-		"completedDegree": user?.university.completedDegree,
-		"statusDegree": user?.university.statusDegree,
-		"localProof": user?.university.localProof,
+		firstName: user?.firstName,
+		lastName: user?.lastName,
+		country: user?.country,
+		userType: user?.userType,
+		languages: user?.languages,
+		age: user?.age,
+		mentorshipFor: user?.mentorshipFor,
+		provideMentorship: user?.provideMentorship,
+		mentorshipLevel: user?.mentorshipLevel,
+		mentorExperience: user?.mentorExperience,
+		mentorSituation: user?.mentorSituation,
+	});
+});
+
+//fetch user data
+const getData = asyncHandler(async (req, res) => {
+	const { user } = req;
+
+	res.status(200).json({
+		user,
 	});
 });
 
@@ -222,21 +235,22 @@ const description = asyncHandler(async (req, res) => {
 })
 
 const videoLink = asyncHandler(async (req, res) => {
-	const { user, body } = req
-	const { video, videoLink } = body
-	const newContent = {}
+	const { user, body } = req;
+	const { video, videoLink } = body;
+	const newContent = {};
 
-	body.pages = 5
+	body.pages = 5;
 
 	video
 		? (newContent["videoCloud"] = video)
-		: (newContent["videoLink"] = videoLink)
+		: (newContent["videoLink"] = videoLink);
 
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, newContent, {
 		new: true,
-	})
-	res.status(200).json(updated)
-})
+	});
+
+	res.status(200).json(updated);
+});
 
 const availability = asyncHandler(async (req, res) => {
 	const { user, body } = req
