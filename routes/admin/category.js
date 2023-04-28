@@ -1,5 +1,5 @@
 import express from "express"
-import categoryController from "../controllers/category.js"
+import categoryController from "../../controllers/category.js"
 // import categoryValidator from "../middleware/validators/users/category.js";
 
 const router = express.Router()

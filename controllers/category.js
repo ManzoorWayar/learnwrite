@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import Category from "../models/Category.js"
 import mongoose from "mongoose"
+import User from "../models/User.js"
 
 // @desc    Get all categories
 // @route   GET /api/v1/admin/blog/categories
@@ -84,10 +85,31 @@ const deleteCategory = asyncHandler(async ({ params }, res, next) => {
 	res.status(200).json({})
 })
 
+const specialization = asyncHandler(async (req, res, next) => {
+	const mentors = await User
+		.find({ status: "approved" })
+		.populate('mentorshipFor', 'name slug')
+		.select("mentorshipFor")
+
+	const specialization = mentors[0]?.mentorshipFor
+
+	res.status(200).json(specialization)
+})
+
+const professional = asyncHandler(async (req, res, next) => {
+	const professional = await User
+		.find({ status: "approved" })
+		.distinct("provideMentorship")
+
+	res.status(200).json(professional)
+})
+
 export default {
 	getCategories,
 	getCategory,
 	createCategory,
 	updateCategory,
 	deleteCategory,
+	specialization,
+	professional
 }

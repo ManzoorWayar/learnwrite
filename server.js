@@ -6,13 +6,17 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import mongoSanitize from "express-mongo-sanitize";
 
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/user.js";
 import connectDB from "./config/database.js";
-import categoryRoutes from "./routes/category.js";
 import { corsOptions } from "./config/corsOptions.js";
 import { cornJobs } from "./scheduler/emailService.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+
+import mentorAuthRoutes from "./routes/mentor/auth.js";
+import mentorUserRoutes from "./routes/mentor/user.js";
+import mentorCategoryRoutes from "./routes/mentor/category.js";
+
+import adminMentorRoutes from "./routes/admin/mentor.js";
+import adminCategoryRoutes from "./routes/admin/category.js";
 
 // Load env vars
 dotenv.config();
@@ -50,9 +54,12 @@ app.set("trust proxy", 1);
 cornJobs();
 
 // API routes
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/category", categoryRoutes);
+app.use("/api/v1/auth", mentorAuthRoutes);
+app.use("/api/v1/user", mentorUserRoutes);
+app.use("/api/v1/category", mentorCategoryRoutes);
+
+app.use("/api/v1/admin/category", adminCategoryRoutes);
+app.use("/api/v1/admin/mentor", adminMentorRoutes);
 
 // Error Handling Middlewares
 app.use(notFound);

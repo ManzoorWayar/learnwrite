@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema(
 		userType: {
 			type: String,
 			enum: ["superAdmin", "mentor", "mentee"],
-			default: "mentee",
+			default: "mentor",
 		},
 		update_secret: {
 			type: Object,
@@ -90,7 +90,13 @@ const UserSchema = new mongoose.Schema(
 			},
 			degreeType: {
 				type: String,
-				enum: ["bachelor", "master", "phd"],
+				enum: [
+					"Associate's Degree",
+					"Bachelor's Degree",
+					"Master's Degree",
+					"Post-Doctorate",
+					"Professional Degree",
+				],
 			},
 			specialization: {
 				type: String,
@@ -156,7 +162,7 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 		},
 		videoCloud: {
-			type: String,
+			type: Object,
 		},
 		timeZone: {
 			type: String,
