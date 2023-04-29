@@ -157,6 +157,7 @@ const profile = asyncHandler(async (req, res) => {
 	const { user, body } = req
 	body.pages = 2
 	body.profileImg = req.body.images[0]
+	console.log("controller: ", req.body.images[0]);
 
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
 		new: true,
