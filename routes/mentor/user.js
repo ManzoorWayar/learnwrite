@@ -6,6 +6,8 @@ import videoToCloud from "../../utils/videoToCloudinary.js";
 import uploadToCloud from "../../utils/uploadCloudinary.js";
 import userValidator from "../../middleware/validators/users/user.js";
 import { authenticate, authorize } from "../../middleware/authMiddleware.js";
+import User from "../../models/User.js";
+import advancedResults from "../../middleware/advancedResult.js";
 
 const router = express.Router()
 
@@ -13,7 +15,7 @@ router.use(authenticate)
 
 router
 	.route('/mentor-profile')
-	.get(authorize("superAdmin", "mentor"), userController.getMentorProfile)
+	.get(authorize("superAdmin", "mentor"), advancedResults(User), userController.getMentorProfile)
 
 router
 	.route("/about")

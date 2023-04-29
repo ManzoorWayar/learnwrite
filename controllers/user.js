@@ -23,26 +23,26 @@ const getMentors = asyncHandler(async (req, res) => {
 });
 
 const getMentorProfile = asyncHandler(async (req, res) => {
-	const mentors = await User.find({ status: "approved" })
+	// const mentors = await User.find({ status: "approved" })
 	// need an advanced result middleware for filtering and serching
-
-	res.status(200).json({
-		"profileImg": mentors?.profileImg,
-		"firstName": mentors?.firstName,
-		"lastName": mentors?.lastName,
-		"videoLink": mentors?.videoLink,
-		"videoCloud": mentors?.videoCloud,
-		"mentorshipFor": mentors?.mentorshipFor,
-		"hourlyRate": mentors?.hourlyRate,
-		"serviceFee": mentors?.serviceFee,
-		"discount": mentors?.discount,
-		"totalPayment": mentors?.totalPayment,
-		"languages": mentors?.languages,
-		"headline": mentors?.profile.headline,
-		"introduction": mentors?.profile.introduction,
-		"workExperience": mentors?.profile.workExperience,
-		"availability": mentors?.availability,
-	});
+	res.status(200).json(res.advancedResults);
+	// res.status(200).json({
+	// 	"profileImg": mentors?.profileImg,
+	// 	"firstName": mentors?.firstName,
+	// 	"lastName": mentors?.lastName,
+	// 	"videoLink": mentors?.videoLink,
+	// 	"videoCloud": mentors?.videoCloud,
+	// 	"mentorshipFor": mentors?.mentorshipFor,
+	// 	"hourlyRate": mentors?.hourlyRate,
+	// 	"serviceFee": mentors?.serviceFee,
+	// 	"discount": mentors?.discount,
+	// 	"totalPayment": mentors?.totalPayment,
+	// 	"languages": mentors?.languages,
+	// 	"headline": mentors?.profile.headline,
+	// 	"introduction": mentors?.profile.introduction,
+	// 	"workExperience": mentors?.profile.workExperience,
+	// 	"availability": mentors?.availability,
+	// });
 });
 
 const activeMentors = asyncHandler(async (req, res) => {
@@ -128,26 +128,13 @@ const getBackground = asyncHandler(async (req, res) => {
 	const { user } = req;
 
 	res.status(200).json({
-		firstName: user?.firstName,
-		lastName: user?.lastName,
-		country: user?.country,
-		userType: user?.userType,
-		languages: user?.languages,
-		age: user?.age,
-		mentorshipFor: user?.mentorshipFor,
-		provideMentorship: user?.provideMentorship,
-		mentorshipLevel: user?.mentorshipLevel,
-		mentorExperience: user?.mentorExperience,
-		mentorSituation: user?.mentorSituation,
-	});
-});
-
-//fetch user data
-const getData = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		user,
+		"name": user?.university.name,
+		"degree": user?.university.degree,
+		"degreeType": user?.university.degreeType,
+		"specialization": user?.university.specialization,
+		"completedDegree": user?.university.completedDegree,
+		"statusDegree": user?.university.statusDegree,
+		"localProof": user?.university.localProof,
 	});
 });
 
@@ -179,43 +166,43 @@ const profile = asyncHandler(async (req, res) => {
 
 const education = asyncHandler(async (req, res) => {
 	const { user, body } = req
-	const {
-		name,
-		degree,
-		degreeType,
-		specialization,
-		completedDegree,
-		statusDegree,
-		localProof,
-	} = body
-	body.pages = 3
-	body.university = new Object({
-		name: name,
-		degree: degree,
-		degreeType: degreeType,
-		specialization: specialization,
-		completedDegree: completedDegree,
-		statusDegree: statusDegree,
-		localProof: localProof,
-	})
-	body.diploma = body.images[0]
-	body.citizenShip = body.images[1]
+	// const {
+	// 	name,
+	// 	degree,
+	// 	degreeType,
+	// 	specialization,
+	// 	completedDegree,
+	// 	statusDegree,
+	// 	localProof,
+	// } = body
+	// body.pages = 3
+	// body.university = new Object({
+	// 	name: name,
+	// 	degree: degree,
+	// 	degreeType: degreeType,
+	// 	specialization: specialization,
+	// 	completedDegree: completedDegree,
+	// 	statusDegree: statusDegree,
+	// 	localProof: localProof,
+	// })
+	// body.diploma = body.images[0]
+	// body.citizenShip = body.images[1]
 
-	const updated = await User.findByIdAndUpdate(
-		{ _id: user.id },
-		{
-			$set: {
-				university: body.university,
-				pages: body.pages,
-				diploma: body.diploma,
-				citizenship: body.citizenShip,
-			},
-		},
-		{
-			new: true,
-		}
-	)
-	res.status(200).json(updated)
+	// const updated = await User.findByIdAndUpdate(
+	// 	{ _id: user.id },
+	// 	{
+	// 		$set: {
+	// 			university: body.university,
+	// 			pages: body.pages,
+	// 			diploma: body.diploma,
+	// 			citizenship: body.citizenShip,
+	// 		},
+	// 	},
+	// 	{
+	// 		new: true,
+	// 	}
+	// )
+	res.status(200).json(body)
 })
 
 const description = asyncHandler(async (req, res) => {
@@ -235,22 +222,21 @@ const description = asyncHandler(async (req, res) => {
 })
 
 const videoLink = asyncHandler(async (req, res) => {
-	const { user, body } = req;
-	const { video, videoLink } = body;
-	const newContent = {};
+	const { user, body } = req
+	const { video, videoLink } = body
+	const newContent = {}
 
-	body.pages = 5;
+	body.pages = 5
 
 	video
 		? (newContent["videoCloud"] = video)
-		: (newContent["videoLink"] = videoLink);
+		: (newContent["videoLink"] = videoLink)
 
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, newContent, {
 		new: true,
-	});
-
-	res.status(200).json(updated);
-});
+	})
+	res.status(200).json(updated)
+})
 
 const availability = asyncHandler(async (req, res) => {
 	const { user, body } = req

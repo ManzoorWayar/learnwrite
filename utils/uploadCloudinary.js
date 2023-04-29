@@ -10,21 +10,24 @@ const uploadToCloud = async (req, res, next) => {
 	req.body.images = []
 
 	try {
-		await Promise.all(
-			Object.values(files).map(async (file) => {
-				for (const element of file) {
-					const img = await cloudinary.cloudinary.uploader.upload(
-						element.path,
-						{
-							upload_preset: "leaninbox",
-						}
-					)
-					req.body.images.push({ ...img, name: element.fieldname })
+		if (files && Object.values(files).length > 0) {
+			await Promise.all(
+				Object.values(files).map(async (file) => {
+					for (const element of file) {
+						const img = await cloudinary.cloudinary.uploader.upload(
+							element.path,
+							{
+								upload_preset: "leaninbox",
+							}
+						)
+						req.body.images.push({ ...img, name: element.fieldname })
 
-					await unlink(`${__dirname}/public/uploads/${element?.filename}`)
-				}
-			})
-		)
+						await unlink(`${__dirname}/public/uploads/${element?.filename}`)
+					}
+				})
+			)
+		}
+
 		next()
 	} catch (err) {
 		next(err)
