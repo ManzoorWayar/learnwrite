@@ -117,4 +117,11 @@ router
 	.route("/user-data")
 	.get(authorize("superAdmin", "mentor"), userController.getData)
 
+router
+	.route("/change-status")
+	.put(
+		authorize("superAdmin", "mentor"),
+		userValidator.mentorStatus,
+		userController.mentorStatus
+	)
 export default router
