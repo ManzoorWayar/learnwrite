@@ -5,8 +5,8 @@ import cloudinary from "../config/cloudinary.js"
 const uploadToCloud = async (req, res, next) => {
 	const __dirname = path.resolve()
 
-	const { files, file } = req
-	console.log("middlware: ", files, file);
+	const { files } = req
+	console.log(req);
 	req.body.images = []
 
 	try {
