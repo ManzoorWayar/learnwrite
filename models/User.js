@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema(
 			select: false,
 			default: speakeasy.generateSecret({ length: 32 }),
 		},
+		images: Array,
 		password: {
 			type: String,
 

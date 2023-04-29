@@ -166,43 +166,40 @@ const profile = asyncHandler(async (req, res) => {
 
 const education = asyncHandler(async (req, res) => {
 	const { user, body } = req
-	// const {
-	// 	name,
-	// 	degree,
-	// 	degreeType,
-	// 	specialization,
-	// 	completedDegree,
-	// 	statusDegree,
-	// 	localProof,
-	// } = body
-	// body.pages = 3
-	// body.university = new Object({
-	// 	name: name,
-	// 	degree: degree,
-	// 	degreeType: degreeType,
-	// 	specialization: specialization,
-	// 	completedDegree: completedDegree,
-	// 	statusDegree: statusDegree,
-	// 	localProof: localProof,
-	// })
-	// body.diploma = body.images[0]
-	// body.citizenShip = body.images[1]
+	const {
+		name,
+		degree,
+		degreeType,
+		specialization,
+		completedDegree,
+		statusDegree,
+		localProof,
+	} = body
+	body.pages = 3
+	body.university = new Object({
+		name: name,
+		degree: degree,
+		degreeType: degreeType,
+		specialization: specialization,
+		completedDegree: completedDegree,
+		statusDegree: statusDegree,
+		localProof: localProof,
+	})
 
-	// const updated = await User.findByIdAndUpdate(
-	// 	{ _id: user.id },
-	// 	{
-	// 		$set: {
-	// 			university: body.university,
-	// 			pages: body.pages,
-	// 			diploma: body.diploma,
-	// 			citizenship: body.citizenShip,
-	// 		},
-	// 	},
-	// 	{
-	// 		new: true,
-	// 	}
-	// )
-	res.status(200).json(body)
+	const updated = await User.findByIdAndUpdate(
+		{ _id: user.id },
+		{
+			$set: {
+				university: body.university,
+				pages: body.pages,
+				images: body.images
+			},
+		},
+		{
+			new: true,
+		}
+	)
+	res.status(200).json(updated)
 })
 
 const description = asyncHandler(async (req, res) => {
