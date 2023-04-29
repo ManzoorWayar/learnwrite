@@ -141,8 +141,6 @@ const educationSchema = checkSchema({
 		},
 	},
 	degreeType: {
-		escape: true,
-		trim: true,
 		isEmpty: {
 			negated: true,
 			errorMessage: "University degreeType is required",

@@ -10,9 +10,9 @@ const uploadToCloud = async (req, res, next) => {
 	req.body.images = []
 
 	try {
-		await Promise.all(
+		Promise.all(
 			Object.values(files).map(async (file) => {
-				for (const element of file) {
+				file.forEach(async (element) => {
 					const img = await cloudinary.cloudinary.uploader.upload(
 						element.path,
 						{
@@ -20,15 +20,13 @@ const uploadToCloud = async (req, res, next) => {
 						}
 					)
 					req.body.images.push({ ...img, name: element.fieldname })
-
-					await unlink(`${__dirname}/public/uploads/${element?.filename}`)
-				}
+					console.log("read")
+					// await unlink(`${__dirname}/public/uploads/${element?.filename}`)
+				})
 			})
-		)
-		next()
+		).then(next())
 	} catch (err) {
 		next(err)
 	}
 }
-
 export default uploadToCloud

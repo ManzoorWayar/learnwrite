@@ -14,118 +14,49 @@ const getMentors = asyncHandler(async (req, res) => {
 	const mentors = await User.find({})
 
 	res.status(200).json({
-		"firstName": mentors?.firstName,
-		"lastname": mentors?.lastname,
-		"email": mentors?.email,
-		"status": mentors?.status,
-		"mentorstype": mentors?.usertype
-	});
-});
+		firstName: mentors?.firstName,
+		lastname: mentors?.lastname,
+		email: mentors?.email,
+		status: mentors?.status,
+		mentorstype: mentors?.usertype,
+	})
+})
 
 const getMentorProfile = asyncHandler(async (req, res) => {
 	const mentors = await User.find({ status: "approved" })
 	// need an advanced result middleware for filtering and serching
 
 	res.status(200).json({
-		"profileImg": mentors?.profileImg,
-		"firstName": mentors?.firstName,
-		"lastName": mentors?.lastName,
-		"videoLink": mentors?.videoLink,
-		"videoCloud": mentors?.videoCloud,
-		"mentorshipFor": mentors?.mentorshipFor,
-		"hourlyRate": mentors?.hourlyRate,
-		"serviceFee": mentors?.serviceFee,
-		"discount": mentors?.discount,
-		"totalPayment": mentors?.totalPayment,
-		"languages": mentors?.languages,
-		"headline": mentors?.profile.headline,
-		"introduction": mentors?.profile.introduction,
-		"workExperience": mentors?.profile.workExperience,
-		"availability": mentors?.availability,
-	});
-});
+		profileImg: mentors?.profileImg,
+		firstName: mentors?.firstName,
+		lastName: mentors?.lastName,
+		videoLink: mentors?.videoLink,
+		videoCloud: mentors?.videoCloud,
+		mentorshipFor: mentors?.mentorshipFor,
+		hourlyRate: mentors?.hourlyRate,
+		serviceFee: mentors?.serviceFee,
+		discount: mentors?.discount,
+		totalPayment: mentors?.totalPayment,
+		languages: mentors?.languages,
+		headline: mentors?.profile.headline,
+		introduction: mentors?.profile.introduction,
+		workExperience: mentors?.profile.workExperience,
+		availability: mentors?.availability,
+	})
+})
 
 const activeMentors = asyncHandler(async (req, res) => {
 	const active = await User.find({ status: "approved" })
-	res.status(200).json(active);
-});
+	res.status(200).json(active)
+})
 
 const pendingMentors = asyncHandler(async (req, res) => {
 	const pending = await User.find({ status: "pendingMentors" })
-	res.status(200).json(pending);
-});
+	res.status(200).json(pending)
+})
 
 const getAbout = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		"firstName": user?.firstName,
-		"lastName": user?.lastName,
-		"country": user?.country,
-		"userType": user?.userType,
-		"languages": user?.languages,
-		"age": user?.age,
-		"mentorshipFor": user?.mentorshipFor,
-		"provideMentorship": user?.provideMentorship,
-		"mentorshipLevel": user?.mentorshipLevel,
-		"mentorExperience": user?.mentorExperience,
-		"mentorSituation": user?.mentorSituation
-	});
-});
-
-const getProfile = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		profileImg: user?.profileImg
-	});
-});
-
-const getVideo = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		"videoLink": user?.videoLink,
-		"videoCloud": user?.videoCloud,
-	});
-});
-
-const getDescription = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		"headline": user?.profile.headline,
-		"introduction": user?.profile.introduction,
-		"workExperience": user?.profile.workExperience,
-		"mentorshipImpact": user?.profile.mentorshipImpact,
-	});
-});
-
-const getPricing = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		"hourlyRate": user?.hourlyRate,
-		"serviceFee": user?.serviceFee,
-		"discount": user?.discount,
-		"totalPayment": user?.totalPayment,
-	});
-});
-
-const getSubject = asyncHandler(async (req, res) => {
-	const { user } = req;
-
-	res.status(200).json({
-		"mentorshipFor": user?.mentorshipFor,
-		"provideMentorship": user?.provideMentorship,
-		"mentorshipLevel": user?.mentorshipLevel,
-		"mentorExperience": user?.mentorExperience,
-		"mentorSituation": user?.mentorSituation
-	});
-});
-
-const getBackground = asyncHandler(async (req, res) => {
-	const { user } = req;
+	const { user } = req
 
 	res.status(200).json({
 		firstName: user?.firstName,
@@ -139,17 +70,85 @@ const getBackground = asyncHandler(async (req, res) => {
 		mentorshipLevel: user?.mentorshipLevel,
 		mentorExperience: user?.mentorExperience,
 		mentorSituation: user?.mentorSituation,
-	});
-});
+	})
+})
+
+const getProfile = asyncHandler(async (req, res) => {
+	const { user } = req
+
+	res.status(200).json({
+		profileImg: user?.profileImg,
+	})
+})
+
+const getVideo = asyncHandler(async (req, res) => {
+	const { user } = req
+
+	res.status(200).json({
+		videoLink: user?.videoLink,
+		videoCloud: user?.videoCloud,
+	})
+})
+
+const getDescription = asyncHandler(async (req, res) => {
+	const { user } = req
+
+	res.status(200).json({
+		headline: user?.profile.headline,
+		introduction: user?.profile.introduction,
+		workExperience: user?.profile.workExperience,
+		mentorshipImpact: user?.profile.mentorshipImpact,
+	})
+})
+
+const getPricing = asyncHandler(async (req, res) => {
+	const { user } = req
+
+	res.status(200).json({
+		hourlyRate: user?.hourlyRate,
+		serviceFee: user?.serviceFee,
+		discount: user?.discount,
+		totalPayment: user?.totalPayment,
+	})
+})
+
+const getSubject = asyncHandler(async (req, res) => {
+	const { user } = req
+
+	res.status(200).json({
+		mentorshipFor: user?.mentorshipFor,
+		provideMentorship: user?.provideMentorship,
+		mentorshipLevel: user?.mentorshipLevel,
+		mentorExperience: user?.mentorExperience,
+		mentorSituation: user?.mentorSituation,
+	})
+})
+
+const getBackground = asyncHandler(async (req, res) => {
+	const { user } = req
+
+	res.status(200).json({
+		firstName: user?.firstName,
+		lastName: user?.lastName,
+		country: user?.country,
+		userType: user?.userType,
+		languages: user?.languages,
+		age: user?.age,
+		mentorshipFor: user?.mentorshipFor,
+		provideMentorship: user?.provideMentorship,
+		mentorshipLevel: user?.mentorshipLevel,
+		mentorExperience: user?.mentorExperience,
+		mentorSituation: user?.mentorSituation,
+	})
+})
 
 //fetch user data
 const getData = asyncHandler(async (req, res) => {
-	const { user } = req;
-
+	const { user } = req
 	res.status(200).json({
 		user,
-	});
-});
+	})
+})
 
 const about = asyncHandler(async (req, res) => {
 	const { user, body } = req
@@ -198,24 +197,25 @@ const education = asyncHandler(async (req, res) => {
 		statusDegree: statusDegree,
 		localProof: localProof,
 	})
-	body.diploma = body.images[0]
-	body.citizenShip = body.images[1]
+	console.log("body", body.images)
+	// body.diploma = body.images[0]
+	// body.citizenShip = body.images[1]
 
-	const updated = await User.findByIdAndUpdate(
-		{ _id: user.id },
-		{
-			$set: {
-				university: body.university,
-				pages: body.pages,
-				diploma: body.diploma,
-				citizenship: body.citizenShip,
-			},
-		},
-		{
-			new: true,
-		}
-	)
-	res.status(200).json(updated)
+	// const updated = await User.findByIdAndUpdate(
+	// 	{ _id: user.id },
+	// 	{
+	// 		$set: {
+	// 			university: body.university,
+	// 			pages: body.pages,
+	// 			diploma: body.diploma,
+	// 			citizenship: body.citizenShip,
+	// 		},
+	// 	},
+	// 	{
+	// 		new: true,
+	// 	}
+	// )
+	// res.status(200).json(updated)
 })
 
 const description = asyncHandler(async (req, res) => {
@@ -235,22 +235,22 @@ const description = asyncHandler(async (req, res) => {
 })
 
 const videoLink = asyncHandler(async (req, res) => {
-	const { user, body } = req;
-	const { video, videoLink } = body;
-	const newContent = {};
+	const { user, body } = req
+	const { video, videoLink } = body
+	const newContent = {}
 
-	body.pages = 5;
+	body.pages = 5
 
 	video
 		? (newContent["videoCloud"] = video)
-		: (newContent["videoLink"] = videoLink);
+		: (newContent["videoLink"] = videoLink)
 
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, newContent, {
 		new: true,
-	});
+	})
 
-	res.status(200).json(updated);
-});
+	res.status(200).json(updated)
+})
 
 const availability = asyncHandler(async (req, res) => {
 	const { user, body } = req
@@ -316,6 +316,7 @@ export default {
 	getAbout,
 	getMentors,
 	getVideo,
+	getData,
 	getDescription,
 	getPricing,
 	getSubject,
@@ -324,5 +325,5 @@ export default {
 	getProfile,
 	activeMentors,
 	getMentorProfile,
-	pendingMentors
-};
+	pendingMentors,
+}
