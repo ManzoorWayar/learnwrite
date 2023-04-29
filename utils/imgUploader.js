@@ -5,11 +5,11 @@ import { body } from "express-validator";
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
+    console.log(file);
     cb(null, "public/uploads/");
   },
 
   filename(req, file, cb) {
-    console.log(file);
     cb(null, file.originalname);
   },
 });
