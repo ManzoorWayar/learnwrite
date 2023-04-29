@@ -150,7 +150,6 @@ const verifyEmail = asyncHandler(async (req, res) => {
 		accessToken,
 	})
 })
-<<<<<<< HEAD
 
 export default {
 	login,
@@ -158,78 +157,4 @@ export default {
 	verifyEmail,
 	logout,
 	signup,
-=======
-
-// @desc    resend token to user
-// @route   POST /api/v1/auth/resend-token
-// @access  Public
-const resendToken = asyncHandler(async (req, res) => {
-	const { body } = req
-	const user = await User.findOne({ email: body.email })
-		.select("+update_secret")
-		.exec()
-
-	if (user.verifiedAt) {
-		throw new Error("Email already verified")
-	}
-
-	await user.sendEmailVerificationToken()
-
-	res.json({
-		id: user["_id"] || null,
-		email: user["email"] || null,
-	})
-})
-
-// @desc      Forgot password
-// @route     POST /api/v1/auth/forgot-password
-// @access    Public
-const forgotPassword = asyncHandler(async (req, res) => {
-	const user = await User.findOne({ email: req.body.email })
-		.select("+update_secret")
-		.exec()
-
-	await user.sendEmailVerificationToken()
-
-	res.json({
-		id: user["_id"] || null,
-		email: user["email"] || null,
-	})
-})
-
-// @desc      Reset password
-// @route     PUT /api/v1/reset-password
-// @access    Public
-const resetPassword = asyncHandler(async (req, res) => {
-	const { token, newPassword, email } = req.body
-
-	const user = await User.findOne({ email: email })
-		.select("+update_secret")
-		.exec()
-
-	const verify = user.verifyEmailVerificationToken(token)
-
-	if (!user || !verify) {
-		res.statusCode = 400
-		throw new Error("token is in correct!")
-	}
-
-	user.password = newPassword
-	user.resetPasswordToken = undefined
-
-	await user.save()
-
-	return res.status(200).json({ success: true })
-})
-
-export default {
-	login,
-	logout,
-	signup,
-	refresh,
-	verifyEmail,
-	resendToken,
-	resetPassword,
-	forgotPassword,
->>>>>>> 3090d0f79a2e89c119984056e862233ffa72e37f
 }
