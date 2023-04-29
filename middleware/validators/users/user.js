@@ -112,7 +112,7 @@ const profileImgSchema = checkSchema({
 			escape: true,
 			trim: true,
 			options: (_, { req }) => {
-				if (!req.body.images[0].name === "profileImg") {
+				if (!req.body?.images[0]?.name === "profileImg") {
 					return Promise.reject("profileImg is required!")
 				}
 				return Promise.resolve()
@@ -265,14 +265,14 @@ const videoLinkSchema = checkSchema({
 			escape: true,
 			trim: true,
 			options: (_, { req }) => {
-				console.log(req?.file && req.body.videoLink === "")
-				if (req?.file && req.body.videoLink !== "") {
+				console.log(req?.file && req.body?.videoLink === "")
+				if (req?.file && req.body?.videoLink !== "") {
 					return Promise.reject(
 						"Please select only a video file or video link."
 					)
-				} else if (req?.file && req.body.videoLink === "") {
+				} else if (req?.file && req.body?.videoLink === "") {
 					return Promise.resolve()
-				} else if (!req?.file && req.body.videoLink !== "") {
+				} else if (!req?.file && req.body?.videoLink !== "") {
 					return Promise.resolve()
 				} else {
 					return Promise.reject("Please provide a video file or video link.")
