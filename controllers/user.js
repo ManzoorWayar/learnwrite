@@ -11,7 +11,7 @@ const create = asyncHandler(async ({ body, file }, res) => {
 });
 
 const getMentors = asyncHandler(async (req, res) => {
-  const mentors = await User.find({});
+  const mentors = await User.find({}).populate("mentorshipFor");
 
   res.status(200).json({
     firstName: mentors?.firstName,
@@ -23,7 +23,9 @@ const getMentors = asyncHandler(async (req, res) => {
 });
 
 const getMentorProfile = asyncHandler(async (req, res) => {
-  const mentors = await User.find({ status: "approved" });
+  const mentors = await User.find({ status: "approved" }).populate(
+    "mentorshipFor"
+  );
   // need an advanced result middleware for filtering and serching
 
   res.status(200).json({
@@ -46,12 +48,16 @@ const getMentorProfile = asyncHandler(async (req, res) => {
 });
 
 const activeMentors = asyncHandler(async (req, res) => {
-  const active = await User.find({ status: "approved" });
+  const active = await User.find({ status: "approved" }).populate(
+    "mentorshipFor"
+  );
   res.status(200).json(active);
 });
 
 const pendingMentors = asyncHandler(async (req, res) => {
-  const pending = await User.find({ status: "pendingMentors" });
+  const pending = await User.find({ status: "pendingMentors" }).populate(
+    "mentorshipFor"
+  );
   res.status(200).json(pending);
 });
 
@@ -145,8 +151,11 @@ const getBackground = asyncHandler(async (req, res) => {
 //fetch user data
 const getData = asyncHandler(async (req, res) => {
   const { user } = req;
+  const userData = await User.findOne({ _Id: user.id }).populate(
+    "mentorshipFor"
+  );
   res.status(200).json({
-    user,
+    userData,
   });
 });
 
@@ -161,7 +170,7 @@ const about = asyncHandler(async (req, res) => {
 
   const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
     new: true,
-  });
+  }).populate("mentorshipFor");
   res.status(200).json(updated);
 });
 
@@ -172,7 +181,7 @@ const profile = asyncHandler(async (req, res) => {
 
   const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
     new: true,
-  });
+  }).populate("mentorshipFor");
   res.status(200).json(updated);
 });
 
@@ -197,7 +206,7 @@ const education = asyncHandler(async (req, res) => {
     statusDegree: statusDegree,
     localProof: localProof,
   });
-  console.log("body", body.images);
+
   // body.diploma = body.images[0]
   // body.citizenShip = body.images[1]
 
@@ -213,7 +222,7 @@ const education = asyncHandler(async (req, res) => {
     {
       new: true,
     }
-  );
+  ).populate("mentorshipFor");
   res.status(200).json(updated);
 });
 
@@ -229,7 +238,7 @@ const description = asyncHandler(async (req, res) => {
   });
   const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
     new: true,
-  });
+  }).populate("mentorshipFor");
   res.status(200).json(updated);
 });
 
@@ -257,7 +266,7 @@ const availability = asyncHandler(async (req, res) => {
 
   const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
     new: true,
-  });
+  }).populate("mentorshipFor");
   res.status(200).json(updated);
 });
 
@@ -268,7 +277,7 @@ const pricing = asyncHandler(async (req, res) => {
 
   const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
     new: true,
-  });
+  }).populate("mentorshipFor");
 
   // Send maiml to user for compeleting the process successfully
   //sendMail functionlaity
