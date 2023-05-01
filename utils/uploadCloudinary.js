@@ -6,7 +6,7 @@ const uploadToCloud = async (req, res, next) => {
 	const __dirname = path.resolve()
 
 	const { files } = req
-	console.log(req);
+
 	req.body.images = []
 
 	try {
