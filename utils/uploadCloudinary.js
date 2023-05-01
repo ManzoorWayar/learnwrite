@@ -22,7 +22,7 @@ const uploadToCloud = async (req, res, next) => {
 						)
 						req.body.images.push({ ...img, name: element.fieldname })
 
-						await unlink(`${__dirname}/public/uploads/${element?.filename}`)
+						await unlink(`${__dirname}/uploads/${element?.filename}`)
 					}
 				})
 			)
