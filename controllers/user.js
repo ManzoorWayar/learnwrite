@@ -52,6 +52,7 @@ const activeMentors = asyncHandler(async (req, res) => {
 
 const getData = asyncHandler(async (req, res) => {
 	const { user } = req;
+
 	const userData = await User.findOne({ _id: user.id }).populate(
 		"mentorshipFor"
 	);
