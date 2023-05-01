@@ -1,5 +1,5 @@
-import { checkSchema, validationResult } from "express-validator";
-import { existsSync, unlinkSync } from "fs";
+import { checkSchema, validationResult } from "express-validator"
+import { existsSync, unlinkSync } from "fs"
 
 const aboutSchema = checkSchema({
   firstName: {
@@ -102,7 +102,7 @@ const aboutSchema = checkSchema({
       errorMessage: "Mentor situation is required",
     },
   },
-});
+})
 
 const profileImgSchema = checkSchema({
   profileImg: {
@@ -113,13 +113,13 @@ const profileImgSchema = checkSchema({
       trim: true,
       options: (_, { req }) => {
         if (!req.body.images[0].name === "profileImg") {
-          return Promise.reject("profileImg is required!");
+          return Promise.reject("profileImg is required!")
         }
-        return Promise.resolve();
+        return Promise.resolve()
       },
     },
   },
-});
+})
 
 const educationSchema = checkSchema({
   name: {
@@ -141,6 +141,8 @@ const educationSchema = checkSchema({
     },
   },
   degreeType: {
+    escape: true,
+    trim: true,
     isEmpty: {
       negated: true,
       errorMessage: "University degreeType is required",
@@ -148,11 +150,11 @@ const educationSchema = checkSchema({
     isIn: {
       options: [
         [
-          "Associate Degree",
-          "Bachelor Degree",
-          "Master Degree",
+          "Associate",
+          "Bachelor",
+          "Master",
           "Post-Doctorate",
-          "Professional Degree",
+          "Professional",
         ],
       ],
       errorMessage: "Invalid University degreeType",
@@ -211,7 +213,7 @@ const educationSchema = checkSchema({
     trim: true,
     escape: true,
   },
-});
+})
 
 const descriptionSchema = checkSchema({
   headline: {
@@ -253,7 +255,7 @@ const descriptionSchema = checkSchema({
       errorMessage: " mentorshipProgram is required",
     },
   },
-});
+})
 
 const videoLinkSchema = checkSchema({
   videoLink: {
@@ -263,22 +265,22 @@ const videoLinkSchema = checkSchema({
       escape: true,
       trim: true,
       options: (_, { req }) => {
-        console.log(req?.file && req.body.videoLink === "");
+        console.log(req?.file && req.body.videoLink === "")
         if (req?.file && req.body.videoLink !== "") {
           return Promise.reject(
             "Please select only a video file or video link."
-          );
+          )
         } else if (req?.file && req.body.videoLink === "") {
-          return Promise.resolve();
+          return Promise.resolve()
         } else if (!req?.file && req.body.videoLink !== "") {
-          return Promise.resolve();
+          return Promise.resolve()
         } else {
-          return Promise.reject("Please provide a video file or video link.");
+          return Promise.reject("Please provide a video file or video link.")
         }
       },
     },
   },
-});
+})
 
 const availabilitySchema = checkSchema({
   availability: {
@@ -296,7 +298,7 @@ const availabilitySchema = checkSchema({
       errorMessage: "Time zone is required",
     },
   },
-});
+})
 
 const pricingSchema = checkSchema({
   hourlyRate: {
@@ -325,7 +327,7 @@ const pricingSchema = checkSchema({
       errorMessage: "total is required",
     },
   },
-});
+})
 
 const mentorStatusSchema = checkSchema({
   status: {
@@ -334,20 +336,20 @@ const mentorStatusSchema = checkSchema({
       errorMessage: "status is required",
     },
   },
-});
+})
 
 const errorHandler = (req, res, next) => {
   // handling validation errors
-  const validationErrs = validationResult(req);
+  const validationErrs = validationResult(req)
   if (!validationErrs.isEmpty()) {
     // removing uploaded files
     if (req.hasOwnProperty("file") && existsSync(req.file.path)) {
-      unlinkSync(req.file.path);
+      unlinkSync(req.file.path)
     }
-    return res.status(400).json({ errors: validationErrs.array() });
+    return res.status(400).json({ errors: validationErrs.array() })
   }
-  next();
-};
+  next()
+}
 
 export default {
   availability: [availabilitySchema, errorHandler],
@@ -358,4 +360,4 @@ export default {
   pricing: [pricingSchema, errorHandler],
   about: [aboutSchema, errorHandler],
   mentorStatus: [mentorStatusSchema, errorHandler],
-};
+}
