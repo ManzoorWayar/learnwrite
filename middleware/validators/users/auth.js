@@ -22,7 +22,6 @@ const signUpSchema = checkSchema({
 			bail: true,
 			errorMessage: "Invalid email address!",
 		},
-		normalizeEmail: true,
 		isEmpty: {
 			negated: true,
 			errorMessage: "Email is empty!",
@@ -55,7 +54,6 @@ const loginSchema = checkSchema({
 			bail: true,
 			errorMessage: "invalid email address.",
 		},
-		normalizeEmail: true,
 		isEmpty: {
 			negated: true,
 			errorMessage: "email is required.",
@@ -119,6 +117,10 @@ const forgotPasswordSchema = checkSchema({
 		isEmail: {
 			bail: true,
 			errorMessage: "invalid email address.",
+		},
+		isEmpty: {
+			negated: true,
+			errorMessage: "Email is empty!",
 		},
 	},
 });
