@@ -150,11 +150,11 @@ const educationSchema = checkSchema({
 		isIn: {
 			options: [
 				[
-					"Associate's Degree",
-					"Bachelor's Degree",
-					"Master's Degree",
-					"Post-Doctorate's Degree",
-					"Professional's Degree",
+					"Associate Degree",
+					"Bachelor Degree",
+					"Master Degree",
+					"Post-Doctorate Degree",
+					"Professional Degree",
 				],
 			],
 			errorMessage: "Invalid University degreeType",
