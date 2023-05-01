@@ -265,7 +265,6 @@ const videoLinkSchema = checkSchema({
 			escape: true,
 			trim: true,
 			options: (_, { req }) => {
-				console.log(req?.file && req.body.videoLink === "")
 				if (req?.file && req.body.videoLink !== "") {
 					return Promise.reject(
 						"Please select only a video file or video link."

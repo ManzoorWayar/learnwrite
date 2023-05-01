@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
-import speakeasy from "speakeasy"
-import User from "../models/User.js"
+import User from "../../models/User.js"
 import asyncHandler from "express-async-handler"
 
 // @desc    Auth User & get token

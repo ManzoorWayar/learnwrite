@@ -1,6 +1,6 @@
 import express from "express";
 import imgUploader from "../../utils/imgUploader.js";
-import userController from "../../controllers/user.js";
+import userController from "../../controllers/mentor/user.js";
 import videoUploader from "../../utils/videoUploader.js";
 import videoToCloud from "../../utils/videoToCloudinary.js";
 import uploadToCloud from "../../utils/uploadCloudinary.js";

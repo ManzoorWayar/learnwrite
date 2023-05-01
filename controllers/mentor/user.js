@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler"
-import { splitString } from "../utils/utils.js"
-import User from "../models/User.js"
+import { splitString } from "../../utils/utils.js"
+import User from "../../models/User.js"
 
 // @desc    Create an user by users
 // @route   POST /api/v1/user/
@@ -9,18 +9,6 @@ const create = asyncHandler(async ({ body, file }, res) => {
 	const user = await User.create(body)
 	res.status(201).json()
 })
-
-const getMentors = asyncHandler(async (req, res) => {
-	const mentors = await User.find({})
-
-	res.status(200).json({
-		"firstName": mentors?.firstName,
-		"lastname": mentors?.lastname,
-		"email": mentors?.email,
-		"status": mentors?.status,
-		"mentorstype": mentors?.usertype
-	});
-});
 
 const getMentorProfile = asyncHandler(async (req, res) => {
 	// const mentors = await User.find({ status: "approved" })
@@ -45,11 +33,6 @@ const getMentorProfile = asyncHandler(async (req, res) => {
 	// });
 });
 
-const activeMentors = asyncHandler(async (req, res) => {
-	const active = await User.find({ status: "approved" })
-	res.status(200).json(active);
-});
-
 const getData = asyncHandler(async (req, res) => {
 	const { user } = req;
 
@@ -60,11 +43,6 @@ const getData = asyncHandler(async (req, res) => {
 	res.status(200).json({
 		userData,
 	});
-});
-
-const pendingMentors = asyncHandler(async (req, res) => {
-	const pending = await User.find({ status: "pendingMentors" })
-	res.status(200).json(pending);
 });
 
 const getAbout = asyncHandler(async (req, res) => {
@@ -173,7 +151,6 @@ const profile = asyncHandler(async (req, res) => {
 	const { user, body } = req
 	body.pages = 2
 	body.profileImg = req.body.images[0]
-	console.log("controller: ", req.body.images[0]);
 
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
 		new: true,
@@ -277,32 +254,6 @@ const pricing = asyncHandler(async (req, res) => {
 	res.status(200).json(updated)
 })
 
-const mentorStatus = asyncHandler(async (req, res) => {
-	const { user, body, params } = req
-
-	if (!mongoose.Types.ObjectId.isValid(params.id)) {
-		return next()
-	}
-
-	body.updaterId = user?.id
-
-	const mentor = await User.findByIdAndUpdate(
-		params.id,
-		{
-			status: body.status,
-			updaterId: user?.id,
-		},
-		{ new: true }
-	)
-
-	if (mentor) {
-		res.status(400)
-		throw new Error("no mentor was found")
-	}
-
-	res.status(200).json(mentor)
-})
-
 export default {
 	about,
 	education,
@@ -311,19 +262,14 @@ export default {
 	create,
 	pricing,
 	profile,
-	mentorStatus,
 	videoLink,
 	getAbout,
-	getMentors,
 	getVideo,
 	getDescription,
 	getPricing,
 	getSubject,
 	getBackground,
-	getMentors,
 	getProfile,
-	activeMentors,
 	getMentorProfile,
-	pendingMentors,
 	getData
 };
