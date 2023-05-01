@@ -1,23 +1,33 @@
-import express from "express";
-import authController from "../../controllers/auth.js";
-import authValidator from "../../middleware/validators/users/auth.js";
+import express from "express"
+import authController from "../../controllers/auth.js"
+import authValidator from "../../middleware/validators/users/auth.js"
 
-const router = express.Router();
+const router = express.Router()
 
-router.route("/sign-up").post(authValidator.signup, authController.signup);
+router.route("/sign-up").post(authValidator.signup, authController.signup)
 
-router.route("/login").post(authValidator.login, authController.login);
+router.route("/login").post(authValidator.login, authController.login)
 
-router.post("/verify", authValidator.verifyEmail, authController.verifyEmail);
+router.post("/verify", authValidator.verifyEmail, authController.verifyEmail)
 
 router.post(
-  "/resend-token",
-  authValidator.verifyEmail,
-  authController.verifyEmail
-);
+	"/resend-token",
+	authValidator.resendToken,
+	authController.resendToken
+)
 
-router.route("/refresh").get(authController.refresh);
+router.route("/refresh").get(authController.refresh)
 
-router.route("/logout").post(authController.logout);
+router.route("/logout").post(authController.logout)
 
-export default router;
+router.post(
+	"/forgot-password",
+	authValidator.forgotPassword,
+	authController.forgotPassword
+)
+router.put(
+	"/reset-password",
+	authValidator.resetPassword,
+	authController.resetPassword
+)
+export default router
