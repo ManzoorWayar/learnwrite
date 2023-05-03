@@ -72,10 +72,6 @@ const UserSchema = new mongoose.Schema(
 				level: String
 			}],
 		},
-		mentorshipLevel: {
-			type: String,
-			enum: ["A1", "A2", "B1", "B2"],
-		},
 		mentorExperience: {
 			type: String,
 		},

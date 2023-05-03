@@ -72,19 +72,6 @@ const aboutSchema = checkSchema({
 		},
 	},
 
-	mentorshipLevel: {
-		escape: true,
-		trim: true,
-		isEmpty: {
-			negated: true,
-			errorMessage: "MentorshipLevel is required",
-		},
-		isIn: {
-			options: [["A1", "A2", "B1", "B2"]],
-			errorMessage: "Invalid mentorshipLevel",
-		},
-	},
-
 	mentorExperience: {
 		escape: true,
 		trim: true,
