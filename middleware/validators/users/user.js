@@ -63,12 +63,21 @@ const aboutSchema = checkSchema({
 		},
 	},
 
-	provideMentorship: {
+	"provideMentorship[*].name": {
 		escape: true,
 		trim: true,
 		isEmpty: {
 			negated: true,
-			errorMessage: " Provide mentorship is required",
+			errorMessage: "Provide mentorship name is required",
+		},
+	},
+
+	"provideMentorship[*].level": {
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "Provide mentorship level is required",
 		},
 	},
 
