@@ -39,7 +39,7 @@ app.use(helmet());
 
 // Body parser
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 //Parse-Cookie
 app.use(cookieParser());

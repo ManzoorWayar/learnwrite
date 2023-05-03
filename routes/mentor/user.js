@@ -51,7 +51,9 @@ router
 
 router
 	.route("/about")
-	.put(authorize("superAdmin", "mentor"), userValidator.about, userController.about);
+	.put(authorize("superAdmin", "mentor"),
+		userValidator.about,
+		userController.about);
 
 router
 	.route("/profile")

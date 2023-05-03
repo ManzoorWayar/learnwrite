@@ -67,7 +67,10 @@ const UserSchema = new mongoose.Schema(
 			},
 		],
 		provideMentorship: {
-			type: [String],
+			type: [{
+				name: String,
+				level: String
+			}],
 		},
 		mentorshipLevel: {
 			type: String,

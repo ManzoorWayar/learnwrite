@@ -144,6 +144,7 @@ const about = asyncHandler(async (req, res) => {
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
 		new: true,
 	})
+
 	res.status(200).json(updated)
 })
 
