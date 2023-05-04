@@ -101,26 +101,28 @@ const UserSchema = new mongoose.Schema(
 			specialization: {
 				type: String,
 			},
-			completeDegree: {
-				type: Date,
+			citizenship: {
+				type: String,
+			},
+			completedDegree: {
+				type: String,
 			},
 			statusDegree: {
 				type: Boolean,
 				default: false,
 			},
-
-			localProof: {
+			isLocalProof: {
 				type: Boolean,
 				default: false,
 			},
 		},
 
-		diploma: {
-			type: [JSON],
-		},
-		citizenship: {
-			type: JSON,
-		},
+		// diploma: {
+		// 	type: [JSON],
+		// },
+		// localProofs: {
+		// 	type: JSON,
+		// },
 
 		pages: {
 			type: Number,

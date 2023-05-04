@@ -166,7 +166,7 @@ const educationSchema = checkSchema({
 		},
 	},
 	completedDegree: {
-		escape: true,
+		// escape: true,
 		trim: true,
 		isEmpty: {
 			negated: true,
@@ -185,12 +185,20 @@ const educationSchema = checkSchema({
 			errorMessage: "University statusDegree is required",
 		},
 	},
-	localProof: {
+	isLocalProof: {
 		escape: true,
 		trim: true,
 		isEmpty: {
 			negated: true,
 			errorMessage: "University localProof is required",
+		},
+	},
+	citizenship: {
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "citizenship is required",
 		},
 	},
 
@@ -205,7 +213,7 @@ const educationSchema = checkSchema({
 		// },
 	},
 
-	citizenship: {
+	localProofs: {
 		trim: true,
 		escape: true,
 	},

@@ -168,9 +168,11 @@ const education = asyncHandler(async (req, res) => {
 		specialization,
 		completedDegree,
 		statusDegree,
-		localProof,
+		isLocalProof,
+		citizenship
 	} = body
 	body.pages = 3
+
 	body.university = new Object({
 		name: name,
 		degree: degree,
@@ -178,7 +180,8 @@ const education = asyncHandler(async (req, res) => {
 		specialization: specialization,
 		completedDegree: completedDegree,
 		statusDegree: statusDegree,
-		localProof: localProof,
+		isLocalProof: isLocalProof,
+		citizenship: citizenship
 	})
 
 	const updated = await User.findByIdAndUpdate(
@@ -205,7 +208,7 @@ const description = asyncHandler(async (req, res) => {
 		headline: body.headline,
 		introduction: body.introduction,
 		workExperience: body.workExperience,
-		mentorshipImpact: body.mentorshipImpact,
+		mentorshipProgram: body.mentorshipProgram,
 	})
 	const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
 		new: true,

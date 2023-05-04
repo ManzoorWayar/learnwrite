@@ -69,7 +69,7 @@ router
 	.route("/education")
 	.put(
 		authorize("superAdmin", "mentor"),
-		imgUploader([{ name: "citizenship" }, { name: "diploma" }]),
+		imgUploader([{ name: "localProofs" }, { name: "diploma" }]),
 		uploadToCloud,
 		userValidator.education,
 		userController.education
