@@ -190,7 +190,7 @@ const education = asyncHandler(async (req, res) => {
 			$set: {
 				university: body.university,
 				pages: body.pages,
-				detailImgs: body.images
+				detailImgs: body?.images?.length > 0 ? body?.images : body?.detailImgs
 			},
 		},
 		{
