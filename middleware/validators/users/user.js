@@ -292,7 +292,6 @@ const availabilitySchema = checkSchema({
 	},
 
 	timeZone: {
-		escape: true,
 		trim: true,
 		isEmpty: {
 			negated: true,
