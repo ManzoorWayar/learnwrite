@@ -166,7 +166,6 @@ const educationSchema = checkSchema({
 		},
 	},
 	completedDegree: {
-		// escape: true,
 		trim: true,
 		isEmpty: {
 			negated: true,
@@ -263,7 +262,6 @@ const descriptionSchema = checkSchema({
 
 const videoLinkSchema = checkSchema({
 	videoLink: {
-		escape: true,
 		trim: true,
 		custom: {
 			escape: true,
