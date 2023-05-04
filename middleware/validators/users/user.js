@@ -170,11 +170,7 @@ const educationSchema = checkSchema({
 		isEmpty: {
 			negated: true,
 			errorMessage: "University completeDegree is required",
-		},
-		isDate: {
-			negated: true,
-			errorMessage: "University completeDegree is not a date",
-		},
+		}
 	},
 	statusDegree: {
 		escape: true,
