@@ -63,27 +63,23 @@ const aboutSchema = checkSchema({
     },
   },
 
-  provideMentorship: {
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: " Provide mentorship is required",
-    },
-  },
+	"provideMentorship[*].name": {
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "Provide mentorship name is required",
+		},
+	},
 
-  mentorshipLevel: {
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "MentorshipLevel is required",
-    },
-    isIn: {
-      options: [["A1", "A2", "B1", "B2"]],
-      errorMessage: "Invalid mentorshipLevel",
-    },
-  },
+	"provideMentorship[*].level": {
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "Provide mentorship level is required",
+		},
+	},
 
   mentorExperience: {
     escape: true,
@@ -122,96 +118,82 @@ const profileImgSchema = checkSchema({
 });
 
 const educationSchema = checkSchema({
-  name: {
-    isLength: { max: 20 },
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "University name is required",
-    },
-  },
-  degree: {
-    isLength: { max: 100 },
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "University degree is required",
-    },
-  },
-  degreeType: {
-    isEmpty: {
-      negated: true,
-      errorMessage: "University degreeType is required",
-    },
-    isIn: {
-      options: [
-        [
-          "Associate Degree",
-          "Bachelor Degree",
-          "Master Degree",
-          "Post-Doctorate",
-          "Professional Degree",
-        ],
-      ],
-      errorMessage: "Invalid University degreeType",
-    },
-  },
-  specialization: {
-    isLength: { max: 50 },
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "University specialization is required",
-    },
-  },
-  completedDegree: {
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "University completeDegree is required",
-    },
-    isDate: {
-      negated: true,
-      errorMessage: "University completeDegree is not a date",
-    },
-  },
-  statusDegree: {
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "University statusDegree is required",
-    },
-  },
-  localProof: {
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "University localProof is required",
-    },
-  },
+	name: {
+		isLength: { max: 20 },
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University name is required",
+		},
+	},
+	degree: {
+		isLength: { max: 100 },
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University degree is required",
+		},
+	},
+	degreeType: {
+		// escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University degreeType is required",
+		},
+		isIn: {
+			options: [
+				[
+					"Associate Degree",
+					"Bachelor Degree",
+					"Master Degree",
+					"Post-Doctorate Degree",
+					"Professional Degree",
+				],
+			],
+			errorMessage: "Invalid University degreeType",
+		},
+	},
+	specialization: {
+		isLength: { max: 50 },
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University specialization is required",
+		},
+	},
+	completedDegree: {
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University completeDegree is required",
+		}
+	},
+	statusDegree: {
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University statusDegree is required",
+		},
+	},
+	isLocalProof: {
+		escape: true,
+		trim: true,
+		isEmpty: {
+			negated: true,
+			errorMessage: "University localProof is required",
+		},
+	},
 
-  diploma: {
-    trim: true,
-    escape: true,
-    // options: (_, { req }) => {
-    //   if (!req.body.images[0].name === "diploma") {
-    //     return Promise.reject("diploma is required!");
-    //   }
-    //   return Promise.resolve();
-    // },
-  },
-
-  citizenship: {
-    trim: true,
-    escape: true,
-  },
-});
+	localProofs: {
+		trim: true,
+		escape: true,
+	},
+})
 
 const descriptionSchema = checkSchema({
   headline: {
@@ -256,29 +238,27 @@ const descriptionSchema = checkSchema({
 });
 
 const videoLinkSchema = checkSchema({
-  videoLink: {
-    escape: true,
-    trim: true,
-    custom: {
-      escape: true,
-      trim: true,
-      options: (_, { req }) => {
-        console.log(req?.file && req.body.videoLink === "");
-        if (req?.file && req.body.videoLink !== "") {
-          return Promise.reject(
-            "Please select only a video file or video link."
-          );
-        } else if (req?.file && req.body.videoLink === "") {
-          return Promise.resolve();
-        } else if (!req?.file && req.body.videoLink !== "") {
-          return Promise.resolve();
-        } else {
-          return Promise.reject("Please provide a video file or video link.");
-        }
-      },
-    },
-  },
-});
+	videoLink: {
+		trim: true,
+		custom: {
+			escape: true,
+			trim: true,
+			options: (_, { req }) => {
+				if (req?.file && req.body.videoLink !== "") {
+					return Promise.reject(
+						"Please select only a video file or video link."
+					)
+				} else if (req?.file && req.body.videoLink === "") {
+					return Promise.resolve()
+				} else if (!req?.file && req.body.videoLink !== "") {
+					return Promise.resolve()
+				} else {
+					return Promise.reject("Please provide a video file or video link.")
+				}
+			},
+		},
+	},
+})
 
 const availabilitySchema = checkSchema({
   availability: {
@@ -288,15 +268,13 @@ const availabilitySchema = checkSchema({
     },
   },
 
-  timeZone: {
-    escape: true,
-    trim: true,
-    isEmpty: {
-      negated: true,
-      errorMessage: "Time zone is required",
-    },
-  },
-});
+	timeZone: {
+		isEmpty: {
+			negated: true,
+			errorMessage: "Time zone is required",
+		},
+	},
+})
 
 const pricingSchema = checkSchema({
   hourlyRate: {

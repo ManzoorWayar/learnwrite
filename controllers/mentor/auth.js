@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../../models/User.js";
 import asyncHandler from "express-async-handler";
 
 // @desc    Auth User & get token
@@ -24,6 +24,11 @@ const login = asyncHandler(async (req, res, next) => {
   if (!isMatch) {
     return next(new Error("invalid credentials"));
   }
+
+  if (!user.verifiedAt) {
+    return next(new Error("invalid credentials"));
+  }
+
   const accessToken = await user.generateAccessToken();
   const refreshToken = await user.generateRefreshToken();
 

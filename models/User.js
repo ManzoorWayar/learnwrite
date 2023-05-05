@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema(
       select: false,
       default: speakeasy.generateSecret({ length: 32 }),
     },
+    detailImgs: Array,
     password: {
       type: String,
 
@@ -66,11 +67,12 @@ const UserSchema = new mongoose.Schema(
       },
     ],
     provideMentorship: {
-      type: [String],
-    },
-    mentorshipLevel: {
-      type: String,
-      enum: ["A1", "A2", "B1", "B2"],
+      type: [
+        {
+          name: String,
+          level: String,
+        },
+      ],
     },
     mentorExperience: {
       type: String,
@@ -94,30 +96,33 @@ const UserSchema = new mongoose.Schema(
           "Associate Degree",
           "Bachelor Degree",
           "Master Degree",
-          "Post-Doctorate",
+          "Post-Doctorate Degree",
           "Professional Degree",
         ],
       },
       specialization: {
         type: String,
       },
-      completeDegree: {
-        type: Date,
+
+      completedDegree: {
+        type: String,
       },
       statusDegree: {
         type: Boolean,
         default: false,
       },
-
-      localProof: {
+      isLocalProof: {
         type: Boolean,
         default: false,
       },
     },
 
-    images: {
-      type: [JSON],
-    },
+    // diploma: {
+    // 	type: [JSON],
+    // },
+    // localProofs: {
+    // 	type: JSON,
+    // },
 
     pages: {
       type: Number,

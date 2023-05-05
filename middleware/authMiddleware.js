@@ -12,17 +12,18 @@ const authenticate = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
       decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findOne({ _Id: decoded.id });
-      if (!user || user.verifiedAt === null) {
+
+      const user = await User.findById(decoded.id);
+
+      if (!user || !user.verifiedAt)
         throw new Error("Not authorized, token failed");
-      }
 
       req.user = user;
 
       next();
     } catch (error) {
       res.status(403);
-      next(new Error("Not  authorized, token failed, error happen!"));
+      next(new Error("Not authorized, token failed"));
     }
   }
 

@@ -6,7 +6,6 @@ const uploadToCloud = async (req, res, next) => {
 	const __dirname = path.resolve()
 
 	const { files } = req
-
 	req.body.images = []
 
 	try {
@@ -22,7 +21,7 @@ const uploadToCloud = async (req, res, next) => {
 						)
 						req.body.images.push({ ...img, name: element.fieldname })
 
-						await unlink(`${__dirname}/public/uploads/${element?.filename}`)
+						await unlink(`${__dirname}/uploads/${element?.filename}`)
 					}
 				})
 			)
@@ -35,36 +34,3 @@ const uploadToCloud = async (req, res, next) => {
 }
 
 export default uploadToCloud
-
-// import path from "path"
-// import { unlink } from "fs/promises"
-// import cloudinary from "../config/cloudinary.js"
-
-// const uploadToCloud = async (req, res, next) => {
-// 	const __dirname = path.resolve()
-
-// 	const { files } = req
-
-// 	req.body.images = []
-
-// 	try {
-// 		Promise.all(
-// 			Object.values(files).map(async (file) => {
-// 				file.forEach(async (element) => {
-// 					const img = await cloudinary.cloudinary.uploader.upload(
-// 						element.path,
-// 						{
-// 							upload_preset: "leaninbox",
-// 						}
-// 					)
-// 					req.body.images.push({ ...img, name: element.fieldname })
-// 					console.log("read")
-// 					// await unlink(`${__dirname}/public/uploads/${element?.filename}`)
-// 				})
-// 			})
-// 		).then(next())
-// 	} catch (err) {
-// 		next(err)
-// 	}
-// }
-// export default uploadToCloud

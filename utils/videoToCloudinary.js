@@ -18,12 +18,11 @@ const videoToCloud = async (req, res, next) => {
                 },
             )
             req.body.video = response
-            await unlink(`${__dirname}/public/uploads/${file?.filename}`);
+            await unlink(`${__dirname}/uploads/${file?.filename}`);
         }
 
         next();
     } catch (err) {
-        console.log(err);
         next(err);
     }
 };
