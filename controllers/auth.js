@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import speakeasy from "speakeasy";
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 
@@ -123,7 +122,8 @@ const verifyEmail = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email: body.email })
     .select("+update_secret")
-    .exec();
+    .exec()
+    .populate("mentorshipFor");
 
   if (!user) {
     throw new Error("Email not found!");
@@ -160,7 +160,8 @@ const resendToken = asyncHandler(async (req, res) => {
   const { body } = req;
   const user = await User.findOne({ email: body.email })
     .select("+update_secret")
-    .exec();
+    .exec()
+    .populate("mentorshipFor");
 
   if (user.verifiedAt) {
     throw new Error("Email already verified");
@@ -180,7 +181,8 @@ const resendToken = asyncHandler(async (req, res) => {
 const forgotPassword = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
     .select("+update_secret")
-    .exec();
+    .exec()
+    .populate("mentorshipFor");
 
   if (!user) {
     res.statusCode = 404;
@@ -202,7 +204,8 @@ const resetPassword = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email: email })
     .select("+update_secret")
-    .exec();
+    .exec()
+    .populate("mentorshipFor");
 
   const verify = user.verifyEmailVerificationToken(token);
 

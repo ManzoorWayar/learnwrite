@@ -29,21 +29,7 @@ const getMentorProfile = asyncHandler(async (req, res) => {
   // need an advanced result middleware for filtering and serching
 
   res.status(200).json({
-    profileImg: mentors?.profileImg,
-    firstName: mentors?.firstName,
-    lastName: mentors?.lastName,
-    videoLink: mentors?.videoLink,
-    videoCloud: mentors?.videoCloud,
-    mentorshipFor: mentors?.mentorshipFor,
-    hourlyRate: mentors?.hourlyRate,
-    serviceFee: mentors?.serviceFee,
-    discount: mentors?.discount,
-    totalPayment: mentors?.totalPayment,
-    languages: mentors?.languages,
-    headline: mentors?.profile.headline,
-    introduction: mentors?.profile.introduction,
-    workExperience: mentors?.profile.workExperience,
-    availability: mentors?.availability,
+    mentors,
   });
 });
 
@@ -179,9 +165,17 @@ const profile = asyncHandler(async (req, res) => {
   body.pages = 2;
   body.profileImg = req.body.images[0];
 
-  const updated = await User.findByIdAndUpdate({ _id: user.id }, body, {
-    new: true,
-  }).populate("mentorshipFor");
+  const updated = await User.findByIdAndUpdate(
+    { _id: user.id },
+    {
+      $set: {
+        profileImg: body.profileImg,
+      },
+    },
+    {
+      new: true,
+    }
+  ).populate("mentorshipFor");
   res.status(200).json(updated);
 });
 
@@ -255,7 +249,7 @@ const videoLink = asyncHandler(async (req, res) => {
 
   const updated = await User.findByIdAndUpdate({ _id: user.id }, newContent, {
     new: true,
-  });
+  }).populate("mentorshipFor");
 
   res.status(200).json(updated);
 });
@@ -301,7 +295,7 @@ const mentorStatus = asyncHandler(async (req, res) => {
       updaterId: user?.id,
     },
     { new: true }
-  );
+  ).populate("mentorshipFor");
 
   if (mentor) {
     res.status(400);
